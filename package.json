@@ -1,6 +1,6 @@
 {
   "name": "next-wrapper",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "register a function and expose next to it, make sure it called serially",
   "main": "index.js",
   "repository": "git@github.com:kawhi66/next-wrapper.git",
@@ -12,5 +12,8 @@
   },
   "scripts": {
     "test": "jest"
+  },
+  "dependencies": {
+    "uuid": "^3.3.2"
   }
 }

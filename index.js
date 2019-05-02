@@ -1,32 +1,47 @@
+const EventCenter = require('./event-center')
+const uuid = require('uuid/v1')
+const ecmap = {
+    default: new EventCenter()
+}
+
 exports = module.exports = nextWrapper
+exports.nextGenerator = nextGenerator
 
-/**
- * state 启动状态
- * 
- * 0 - 未启动
- * 1 - 已启动
- */
-let state = 0
-let idx = 0
-let queue = []
+function nextWrapper(fn, id) {
+    const args = [].slice.call(arguments)
+    const last = args[args.length - 1]
+    let insId = 'default'
+    let fnlist = []
 
-function nextWrapper(fn) {
-    if (typeof fn === 'function') {
-        queue.push(fn)
+    if (typeof last === 'string') {
+        if (args.length === 2) {
+            insId = id
+            fnlist.push(fn)
+        } else {
+            insId = last
+            fnlist = args.slice(0, -1)
+        }
+    } else {
+        fnlist = args
     }
 
-    if (!state) {
-        state = 1
-        fn(next)
+    if (!ecmap.hasOwnProperty(insId)) {
+        ecmap[insId] = new EventCenter()
+    }
+
+    fnlist.forEach(item => {
+        ecmap[insId].addEvents(item)
+    })
+
+    if (!ecmap[insId].getSnapShot().running) {
+        ecmap[insId].init()
     }
 }
 
-function next() {
-    if (queue.length <= idx + 1) {
-        return false // 异步队列执行完毕
-    }
+function nextGenerator() {
+    const ins = new EventCenter()
+    const id = uuid()
+    ecmap[id] = ins
 
-    if (typeof queue[++idx] === 'function') {
-        queue[idx](next)
-    }
+    return id
 }

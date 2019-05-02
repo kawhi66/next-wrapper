@@ -1,24 +1,56 @@
-const nextWrapper = require('..')
+const nextGenerator = require('../index').nextGenerator
+const nextWrapper = require('../index')
 
-test('next-wrapper', done => {
-    nextWrapper(function async0(next) {
-        setTimeout(() => {
-            console.log('async-0')
-            next()
-        }, 200)
+describe('next-wrapper', () => {
+    test('generate a unique id', () => {
+        const id1 = nextGenerator()
+        const id2 = nextGenerator()
+
+        expect(id1).not.toBe(id2)
     })
 
-    nextWrapper(function async1(next) {
-        setTimeout(() => {
-            console.log('async-1')
-            next()
-        }, 200)
+    test('wrapper an async events with default id', done => {
+        nextWrapper(function (next) {
+            setTimeout(() => {
+                console.log('async-0')
+                next()
+            }, 200)
+        })
+
+        nextWrapper(function (next) {
+            setTimeout(() => {
+                console.log('async-1')
+                next()
+            }, 200)
+        })
+
+        nextWrapper(function (next) {
+            setTimeout(() => {
+                console.log('async-2')
+                setTimeout(done, 200) // make sure async-2 is prior consoled
+            }, 200)
+        })
     })
 
-    nextWrapper(function async2(next) {
-        setTimeout(() => {
-            console.log('async-2')
-            setTimeout(done, 200) // make sure async-2 is prior
-        }, 200)
+    test('wrapper an async events with an unique id', done => {
+        const id = nextGenerator()
+        nextWrapper(function (next) {
+            setTimeout(() => {
+                console.log('async-0')
+                next()
+            }, 200)
+        }, id)
+        nextWrapper(function (next) {
+            setTimeout(() => {
+                console.log('async-1')
+                next()
+            }, 200)
+        }, id)
+        nextWrapper(function (next) {
+            setTimeout(() => {
+                console.log('async-2')
+                setTimeout(done, 200) // make sure async-2 is prior consoled
+            }, 200)
+        }, id)
     })
 });
