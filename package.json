@@ -8,9 +8,12 @@
   "license": "MIT",
   "private": false,
   "devDependencies": {
-    "jest": "^24.7.1"
+    "jest": "^24.7.1",
+    "rollup": "^1.11.3",
+    "rollup-plugin-commonjs": "^9.3.4"
   },
   "scripts": {
+    "build": "rollup -c rollup.config.js",
     "test": "jest"
   },
   "dependencies": {
