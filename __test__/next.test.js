@@ -1,5 +1,7 @@
-const nextGenerator = require('../index').nextGenerator
-const nextWrapper = require('../index')
+const {
+    nextGenerator,
+    nextWrapper
+} = require('../dist/next-wrapper')
 
 describe('next-wrapper', () => {
     test('generate a unique id', () => {

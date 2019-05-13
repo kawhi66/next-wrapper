@@ -1,13 +1,11 @@
-const EventCenter = require('./event-center')
+import EventCenter from './event-center'
+
 const uuid = require('uuid/v1')
 const ecmap = {
     default: new EventCenter()
 }
 
-exports = module.exports = nextWrapper
-exports.nextGenerator = nextGenerator
-
-function nextWrapper(fn, id) {
+export function nextWrapper(fn, id) {
     const args = [].slice.call(arguments)
     const last = args[args.length - 1]
     let insId = 'default'
@@ -38,7 +36,7 @@ function nextWrapper(fn, id) {
     }
 }
 
-function nextGenerator() {
+export function nextGenerator() {
     const ins = new EventCenter()
     const id = uuid()
     ecmap[id] = ins

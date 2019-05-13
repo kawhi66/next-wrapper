@@ -1,4 +1,4 @@
-exports = module.exports = EventCenter
+export default EventCenter
 
 /**
  * @description manager center for async events
