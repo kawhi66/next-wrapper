@@ -30,7 +30,6 @@ export default [
     // `file` and `format` for each target)
     {
         input: 'index.js',
-        // external: ['ms'],
         output: [{
             banner: '/* https://kawhi.site */',
             file: pkg.main,
@@ -48,7 +47,7 @@ export default [
 
     {
         input: 'index.js',
-        // external: ['uuid/v1'],
+        // external: ['uuid'],
         output: {
             file: 'next-wrapper.js',
             format: 'cjs'
