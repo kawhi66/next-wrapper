@@ -2,7 +2,9 @@
   "name": "next-wrapper",
   "version": "0.0.3",
   "description": "register a function and expose next to it, make sure it called serially",
-  "main": "dist/next-wrapper.js",
+  "main": "dist/next-wrapper.cjs.js",
+  "module": "dist/next-wrapper.esm.js",
+  "browser": "dist/next-wrapper.umd.js",
   "repository": "git@github.com:kawhi66/next-wrapper.git",
   "author": "https://kawhi.site",
   "license": "MIT",
@@ -13,13 +15,17 @@
     "rollup-plugin-babel": "^4.3.2",
     "rollup-plugin-babel-minify": "^8.0.0",
     "rollup-plugin-commonjs": "^9.3.4",
-    "rollup-plugin-uglify": "^6.0.2"
+    "rollup-plugin-node-resolve": "^4.2.4"
   },
   "scripts": {
-    "build": "rollup -c rollup.config.js",
+    "build": "rollup -c",
+    "pretest": "yarn build",
     "test": "jest"
   },
   "dependencies": {
     "uuid": "^3.3.2"
-  }
+  },
+  "files": [
+    "dist"
+  ]
 }

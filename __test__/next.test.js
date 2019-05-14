@@ -1,7 +1,7 @@
 const {
     nextGenerator,
     nextWrapper
-} = require('../dist/next-wrapper')
+} = require('../dist/next-wrapper.cjs.js')
 
 describe('next-wrapper', () => {
     test('generate a unique id', () => {
