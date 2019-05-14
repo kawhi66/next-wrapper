@@ -1,15 +1,15 @@
-import babel from "rollup-plugin-babel"
 import cjs from "rollup-plugin-commonjs"
-import minify from "rollup-plugin-babel-minify"
 import pkg from './package.json';
 import resolve from "rollup-plugin-node-resolve"
+import {
+    terser
+} from "rollup-plugin-terser";
 
 export default [
     // browser-friendly UMD build
     {
         input: 'index.js',
         output: {
-            banner: '/* https://kawhi.site */',
             file: pkg.browser,
             format: 'umd',
             name: 'nextWrapper'
@@ -17,8 +17,7 @@ export default [
         plugins: [
             resolve(),
             cjs(),
-            babel(),
-            minify()
+            terser()
         ]
     },
 
@@ -31,29 +30,22 @@ export default [
     {
         input: 'index.js',
         output: [{
-            banner: '/* https://kawhi.site */',
             file: pkg.main,
             format: 'cjs'
         }, {
-            banner: '/* https://kawhi.site */',
             file: pkg.module,
             format: 'es'
         }],
         plugins: [
-            babel(),
-            minify()
+            terser()
         ]
     },
 
     {
         input: 'index.js',
-        // external: ['uuid'],
         output: {
             file: 'next-wrapper.js',
             format: 'cjs'
-        },
-        plugins: [
-            babel()
-        ]
+        }
     }
 ];
